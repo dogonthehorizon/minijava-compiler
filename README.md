@@ -1,6 +1,13 @@
-================================================================
-To set up an Eclipse project for Assignment 1
-================================================================
+MiniJava-Compiler
+=================
+
+Incremental work for the MiniJava compiler, as assigned for CS452 at the University of Portland.
+
+
+Environment
+-----------
+
+### Eclipse
 - Run Eclipse.
   - Select (or create) a workspace folder.
     - (Close the "Welcome" window if it os open
@@ -31,11 +38,10 @@ To set up an Eclipse project for Assignment 1
       in the package explorer
     
 You now should be ready to run WrangLR on the starter-grammar:
+
   - your WrangLR grammar file is src/parser/TokenGrammar.java
 
-================================================================
-Running WrangLR on the grammar file
-================================================================
+#### Running WrangLR on the grammar file
  - right-click on GenTokenGrammarParser.java under src/gen
    - if it warns you that the project has errors, say "Proceed", as the
      hope is that this fix the errors.
@@ -44,9 +50,9 @@ Running WrangLR on the grammar file
    - Select 'asst1' and press the F5 key so that Eclipse does a "refresh",
      and realizes that that file has been created or updated.
 
-================================================================
-Running the generated parser.
-================================================================
+
+#### Running the generated parser.
+
 - right-click on Main.java under src/main
 - Run As -> Java Application
   - The first time WrangLR will report that is needs a file-name argument, so
@@ -57,3 +63,7 @@ Running the generated parser.
       "Program arguments:" text-field
     - Eclipse will remember this argument, so you don't need to do this
       step unless you want to change argument.
+
+### Intellij IDEA 12 -- TODO
+
+### Tests -- TODO
