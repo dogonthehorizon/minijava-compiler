@@ -315,7 +315,7 @@ public void sawLessEq(int pos) {
 public void sawComma(int pos) {
      reportTok(pos, "`,");
 }
-//: token ::= # `> =>
+//: token ::= # `> !"=" =>
 public void sawGreater(int pos) {
      reportTok(pos, "`>");
 }
@@ -371,21 +371,158 @@ public void charLit(int pos, int n) {
 // the actual tokens
 //================================================================
 
-// reserved words
+//----------------//
+// RESERVED WORDS
+//----------------//
+//: `boolean ::= "boolean" !idChar ws*
+//: reserved ::= `boolean
+//: `break ::= "break" !idChar ws*
+//: reserved ::= `break
 //: `class ::= "class" !idChar ws*
 //: reserved ::= `class
 //: `else ::= "else" !idChar ws*
 //: reserved ::= `else
+//: `extends ::= "extends" !idChar ws*
+//: reserved ::= `extends
+//: `false ::= "false" !idChar ws*
+//: reserved ::= `false
+//: `for ::= "for" !idChar ws*
+//: reserved ::= `for
+//: `if ::= "if" !idChar ws*
+//: reserved ::= `if
+//: `instanceOf ::= "instanceOf" !idChar ws*
+//: reserved ::= `instanceOf
+//: `int ::= "int" !idChar ws*
+//: reserved ::= `int
+//: `new ::= "new" !idChar ws*
+//: reserved ::= `new
+//: `null ::= "null" !idChar ws*
+//: reserved ::= `null
+//: `public ::= "public" !idChar ws*
+//: reserved ::= `public
+//: `return ::= "return" !idChar ws*
+//: reserved ::= `return
+//: `super ::= "super" !idChar ws*
+//: reserved ::= `super
+//: `this ::= "this" !idChar ws*
+//: reserved ::= `this
+//: `true ::= "true" !idChar ws*
+//: reserved ::= `true
+//: `void ::= "void" !idChar ws*
+//: reserved ::= `void
+//: `while ::= "while" !idChar ws*
+//: reserved ::= `while
 
-//special-token characters
+//---------------------------//
+// RESERVED WORDS (INACTIVE)
+//---------------------------//
+//: `abstract ::= "abstract" !idChar ws*
+//: reservedNotImplemented ::= `abstract
+//: `assert ::= "assert" !idChar ws*
+//: reservedNotImplemented ::= `assert
+//: `byte ::= "byte" !idChar ws*
+//: reservedNotImplemented ::= `byte
+//: `case ::= "case" !idChar ws*
+//: reservedNotImplemented ::= `case
+//: `catch ::= "catch" !idChar ws*
+//: reservedNotImplemented ::= `catch
+//: `char ::= "char" !idChar ws*
+//: reservedNotImplemented ::= `char
+//: `const ::= "const" !idChar ws*
+//: reservedNotImplemented ::= `const
+//: `continue ::= "continue" !idChar ws*
+//: reservedNotImplemented ::= `continue
+//: `default ::= "default" !idChar ws*
+//: reservedNotImplemented ::= `default
+//: `do ::= "double" !idChar ws*
+//: reservedNotImplemented ::= `double
+//: `enum ::= "enum" !idChar ws*
+//: reservedNotImplemented ::= `enum
+//: `final ::= "final" !idChar ws*
+//: reservedNotImplemented ::= `final
+//: `finally ::= "finally" !idChar ws*
+//: reservedNotImplemented ::= `finally
+//: `float ::= "float" !idChar ws*
+//: reservedNotImplemented ::= `float
+//: `goto ::= "goto" !idChar ws*
+//: reservedNotImplemented ::= `goto
+//: `implements ::= "implements" !idChar ws*
+//: reservedNotImplemented ::= `implements
+//: `import ::= "import" !idChar ws*
+//: reservedNotImplemented ::= `import
+//: `interface ::= "interface" !idChar ws*
+//: reservedNotImplemented ::= `interface
+//: `long ::= "long" !idChar ws*
+//: reservedNotImplemented ::= `long
+//: `native ::= "native" !idChar ws*
+//: reservedNotImplemented ::= `native
+//: `package ::= "package" !idChar ws*
+//: reservedNotImplemented ::= `package
+//: `private ::= "private" !idChar ws*
+//: reservedNotImplemented ::= `private
+//: `protected ::= "protected" !idChar ws*
+//: reservedNotImplemented ::= `protected
+//: `short ::= "short" !idChar ws*
+//: reservedNotImplemented ::= `short
+//: `static ::= "static" !idChar ws*
+//: reservedNotImplemented ::= `static
+//: `strictfp ::= "strictfp" !idChar ws*
+//: reservedNotImplemented ::= `strictfp
+//: `switch ::= "switch" !idChar ws*
+//: reservedNotImplemented ::= `switch
+//: `synchronized ::= "synchronized" !idChar ws*
+//: reservedNotImplemented ::= `synchronized
+//: `throw ::= "throw" !idChar ws*
+//: reservedNotImplemented ::= `throw
+//: `throws ::= "throws" !idChar ws*
+//: reservedNotImplemented ::= `throws
+//: `transient ::= "transient" !idChar ws*
+//: reservedNotImplemented ::= `transient
+//: `try ::= "try" !idChar ws*
+//: reservedNotImplemented ::= `try
+//: `volatile ::= "volatile" !idChar ws*
+//: reservedNotImplemented ::= `volatile
+//: reserved ::= reservedNotImplemented
+
+//--------------------------//
+// SPECIAL-TOKEN CHARACTERS
+//--------------------------//
+//: `! ::= "!" !"=" ws*
 //: `!= ::= "!=" ws*
+//: `% ::= "%" ws*
+//: `&& ::= "&&" ws*
+//: `( ::= "(" ws*
+//: `) ::= ")" ws*
 //: `* ::= "*" ws*
+//: `+ ::= "+" !"+" ws*
+//: `++ ::= "++" ws*
+//: `, ::= "," ws*
+//: `- ::= "-" !"-" ws*
+//: `-- ::= "--" ws*
+//: `. ::= "." ws*
+//: `/ ::= "/" !"/" !"*"
+//: `; ::= ";" ws*
+//: `< ::= "<" !"=" ws*
+//: `<= ::= "<=" ws*
+//: `= ::= "=" !"=" ws*
+//: `== ::= "==" ws*
+//: `> ::= ">" !"=" ws*
+//: `>= ::= ">=" ws*
+//: `[ ::= "[" ws*
+//: `] :== "]" ws*
+//: `{ :== "{" ws*
+//: `|| ::= "|" !"|" ws*
+//: `} ::= "}" ws*
+
+
+//: ID ::= # !reserved letter idChar++ ws* => pass
 
 // A numeric literal
 //: INTLIT ::= # intLit2 ws* =>
 public int convertToInt(int pos, String s) {
 	try {
-		return new Integer(s).intValue();
+//		return new Integer(s).intValue();
+        return Integer.parseInt(s);
 	}
 	catch (NumberFormatException nfx) {
 		error(pos, "Integer literal value "+s+" is out of range.");
