@@ -606,7 +606,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject {
 //: `} ::= "}" ws*
 
 /**
- *  INTEGER LITERALS
+ *  INTEGER LITERALS -- IMPLEMENTS EXTENSION 3
  *
  *  These rules represent integer literals in the MiniJava specification.
  *
@@ -754,7 +754,7 @@ public String convertToString(int pos, Character head, List<Character> rest) {
 }
 
 /**
- * COMMENTS
+ * COMMENTS -- IMPLEMENTS EXTENSION 1
  *
  * These rules represent comments in the MiniJava specification.
  *
