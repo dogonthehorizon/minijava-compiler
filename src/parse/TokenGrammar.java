@@ -5,364 +5,364 @@ import errorMsg.*;
 
 public class TokenGrammar implements wrangLR.runtime.MessageObject {
 
-	public TokenGrammar(ErrorMsg em) {
-		errorMsg = em;
-	}
-	private ErrorMsg errorMsg;
-	
-	public void error(int pos, String msg) {
-		errorMsg.error(pos, msg);
-	}
-	
-	public void warning(int pos, String msg) {
-		errorMsg.warning(pos, msg);
-	}
-	
-	public void reportTok(int pos, String s) {
-		System.out.println(errorMsg.lineAndChar(pos)+": "+s);
-	}
+    public TokenGrammar(ErrorMsg em) {
+        errorMsg = em;
+    }
+    private ErrorMsg errorMsg;
+
+    public void error(int pos, String msg) {
+        errorMsg.error(pos, msg);
+    }
+
+    public void warning(int pos, String msg) {
+        errorMsg.warning(pos, msg);
+    }
+
+    public void reportTok(int pos, String s) {
+        System.out.println(errorMsg.lineAndChar(pos)+": "+s);
+    }
 
 
 //: start ::= ws* token*
-	
 
-//: token ::= # `boolean =>
-public void sawBoolean(int pos) {
-       reportTok(pos, "`boolean");
-}
-//: token ::= # `class =>
-public void sawClass(int pos) {
-       reportTok(pos, "`class");
-}
-//: token ::= # `extends =>
-public void sawExtends(int pos) {
-       reportTok(pos, "`extends");
-}
-//: token ::= # `void =>
-public void sawVoid(int pos) {
-       reportTok(pos, "`void");
-}
-//: token ::= # `int =>
-public void sawInt(int pos) {
-       reportTok(pos, "`int");
-}
-//: token ::= # `while =>
-public void sawWhile(int pos) {
-       reportTok(pos, "`while");
-}
-//: token ::= # `if =>
-public void sawIf(int pos) {
-       reportTok(pos, "`if");
-}
-//: token ::= # `else =>
-public void sawElse(int pos) {
-       reportTok(pos, "`else");
-}
-//: token ::= # `for =>
-public void sawFor(int pos) {
-       reportTok(pos, "`for");
-}
-//: token ::= # `break =>
-public void sawBreak(int pos) {
-       reportTok(pos, "`break");
-}
-//: token ::= # `this =>
-public void sawThis(int pos) {
-       reportTok(pos, "`this");
-}
-//: token ::= # `false =>
-public void sawFalse(int pos) {
-       reportTok(pos, "`false");
-}
-//: token ::= # `true =>
-public void sawTrue(int pos) {
-       reportTok(pos, "`true");
-}
-//: token ::= # `super =>
-public void sawSuper(int pos) {
-       reportTok(pos, "`super");
-}
-//: token ::= # `null =>
-public void sawNull(int pos) {
-       reportTok(pos, "`null");
-}
-//: token ::= # `return =>
-public void sawReturn(int pos) {
-       reportTok(pos, "`return");
-}
-//: token ::= # `instanceof =>
-public void sawInstanceof(int pos) {
-       reportTok(pos, "`instanceof");
-}
-//: token ::= # `new =>
-public void sawNew(int pos) {
-       reportTok(pos, "`new");
-}
-//: token ::= # `abstract =>
-public void sawAbstract(int pos) {
-       reportTok(pos, "`abstract");
-}
-//: token ::= # `assert =>
-public void sawAssert(int pos) {
-       reportTok(pos, "`assert");
-}
-//: token ::= # `byte =>
-public void sawByte(int pos) {
-       reportTok(pos, "`byte");
-}
-//: token ::= # `case =>
-public void sawCase(int pos) {
-       reportTok(pos, "`case");
-}
-//: token ::= # `catch =>
-public void sawCatch(int pos) {
-       reportTok(pos, "`catch");
-}
-//: token ::= # `char =>
-public void sawChar(int pos) {
-       reportTok(pos, "`char");
-}
-//: token ::= # `const =>
-public void sawConst(int pos) {
-       reportTok(pos, "`const");
-}
-//: token ::= # `continue =>
-public void sawContinue(int pos) {
-       reportTok(pos, "`continue");
-}
-//: token ::= # `default =>
-public void sawDefault(int pos) {
-       reportTok(pos, "`default");
-}
-//: token ::= # `do =>
-public void sawDo(int pos) {
-       reportTok(pos, "`do");
-}
-//: token ::= # `double =>
-public void sawDouble(int pos) {
-       reportTok(pos, "`double");
-}
-//: token ::= # `enum =>
-public void sawEnum(int pos) {
-       reportTok(pos, "`enum");
-}
-//: token ::= # `final =>
-public void sawFinal(int pos) {
-       reportTok(pos, "`final");
-}
-//: token ::= # `finally =>
-public void sawFinally(int pos) {
-       reportTok(pos, "`finally");
-}
-//: token ::= # `float =>
-public void sawFloat(int pos) {
-       reportTok(pos, "`float");
-}
-//: token ::= # `goto =>
-public void sawGoto(int pos) {
-       reportTok(pos, "`goto");
-}
-//: token ::= # `implements =>
-public void sawImplements(int pos) {
-       reportTok(pos, "`implements");
-}
-//: token ::= # `import =>
-public void sawImport(int pos) {
-       reportTok(pos, "`import");
-}
-//: token ::= # `interface =>
-public void sawInterface(int pos) {
-       reportTok(pos, "`interface");
-}
-//: token ::= # `long =>
-public void sawLong(int pos) {
-       reportTok(pos, "`long");
-}
-//: token ::= # `native =>
-public void sawNative(int pos) {
-       reportTok(pos, "`native");
-}
-//: token ::= # `package =>
-public void sawPackage(int pos) {
-       reportTok(pos, "`package");
-}
-//: token ::= # `private =>
-public void sawPrivate(int pos) {
-       reportTok(pos, "`private");
-}
-//: token ::= # `protected =>
-public void sawProtected(int pos) {
-       reportTok(pos, "`protected");
-}
-//: token ::= # `public =>
-public void sawPublic(int pos) {
-       reportTok(pos, "`public");
-}
-//: token ::= # `short =>
-public void sawShort(int pos) {
-       reportTok(pos, "`short");
-}
-//: token ::= # `static =>
-public void sawStatic(int pos) {
-       reportTok(pos, "`static");
-}
-//: token ::= # `strictfp =>
-public void sawStrictfp(int pos) {
-       reportTok(pos, "`strictfp");
-}
-//: token ::= # `switch =>
-public void sawSwitch(int pos) {
-       reportTok(pos, "`switch");
-}
-//: token ::= # `synchronized =>
-public void sawSynchronized(int pos) {
-       reportTok(pos, "`synchronized");
-}
-//: token ::= # `throw =>
-public void sawThrow(int pos) {
-       reportTok(pos, "`throw");
-}
-//: token ::= # `throws =>
-public void sawThrows(int pos) {
-       reportTok(pos, "`throws");
-}
-//: token ::= # `transient =>
-public void sawTransient(int pos) {
-       reportTok(pos, "`transient");
-}
-//: token ::= # `try =>
-public void sawTry(int pos) {
-       reportTok(pos, "`try");
-}
-//: token ::= # `volatile =>
-public void sawVolatile(int pos) {
-       reportTok(pos, "`volatile");
-}
 
-//: token ::= # `! =>
-public void sawNot(int pos) {
-     reportTok(pos, "`!");
-}
-//: token ::= # `!= =>
-public void sawNotEqual(int pos) {
-     reportTok(pos, "`!=");
-}
-//: token ::= # `% =>
-public void sawRemainder(int pos) {
-     reportTok(pos, "`%");
-}
-//: token ::= # `&& =>
-public void sawAnd(int pos) {
-     reportTok(pos, "`&&");
-}
-//: token ::= # `* =>
-public void sawTimes(int pos) {
-     reportTok(pos, "`*");
-}
-//: token ::= # `( =>
-public void sawLpar(int pos) {
-     reportTok(pos, "`(");
-}
-//: token ::= # `) =>
-public void sawRpar(int pos) {
-     reportTok(pos, "`)");
-}
-//: token ::= # `{ =>
-public void sawLbrace(int pos) {
-     reportTok(pos, "`{");
-}
-//: token ::= # `} =>
-public void sawRbrace(int pos) {
-     reportTok(pos, "`}");
-}
-//: token ::= # `- =>
-public void sawMinus(int pos) {
-     reportTok(pos, "`-");
-}
-//: token ::= # `+ =>
-public void sawPlus(int pos) {
-     reportTok(pos, "`+");
-}
-//: token ::= # `= =>
-public void sawAssign(int pos) {
-     reportTok(pos, "`=");
-}
-//: token ::= # `== =>
-public void sawEqual(int pos) {
-     reportTok(pos, "`==");
-}
-//: token ::= # `[ =>
-public void sawLbrack(int pos) {
-     reportTok(pos, "`[");
-}
-//: token ::= # `] =>
-public void sawRbrack(int pos) {
-     reportTok(pos, "`]");
-}
-//: token ::= # `|| =>
-public void sawOr(int pos) {
-     reportTok(pos, "`||");
-}
-//: token ::= # `< =>
-public void sawLess(int pos) {
-     reportTok(pos, "`<");
-}
-//: token ::= # `<= =>
-public void sawLessEq(int pos) {
-     reportTok(pos, "`<=");
-}
-//: token ::= # `, =>
-public void sawComma(int pos) {
-     reportTok(pos, "`,");
-}
-//: token ::= # `> !"=" =>
-public void sawGreater(int pos) {
-     reportTok(pos, "`>");
-}
-//: token ::= # `>= =>
-public void sawGreaterEq(int pos) {
-     reportTok(pos, "`>=");
-}
-//: token ::= # `. =>
-public void sawDot(int pos) {
-     reportTok(pos, "`.");
-}
-//: token ::= # `; =>
-public void sawSemi(int pos) {
-     reportTok(pos, "`;");
-}
-//: token ::= # `++ =>
-public void sawPlusPlus(int pos) {
-     reportTok(pos, "`++");
-}
-//: token ::= # `-- =>
-public void sawMinusMinus(int pos) {
-     reportTok(pos, "`--");
-}
-//: token ::= # `/ =>
-public void sawSlash(int pos) {
-     reportTok(pos, "`/");
-}
-	
-//: token ::= # ID =>
-public void identifier(int pos, String s) {
-	reportTok(pos, "identifier: "+s);
-}
-	
-//: token ::= # INTLIT =>
-public void intLit(int pos, int n) {
-	reportTok(pos, "integer literal: "+n);
-}
-	
-//: token ::= # STRINGLIT =>
-public void stringLit(int pos, String s) {
-	reportTok(pos, "string literal: "+s);
-}
-	
-//: token ::= # CHARLIT =>
-public void charLit(int pos, int n) {
-	reportTok(pos, "chracter literal with ASCII value: "+n);
-}
+    //: token ::= # `boolean =>
+    public void sawBoolean(int pos) {
+        reportTok(pos, "`boolean");
+    }
+    //: token ::= # `class =>
+    public void sawClass(int pos) {
+        reportTok(pos, "`class");
+    }
+    //: token ::= # `extends =>
+    public void sawExtends(int pos) {
+        reportTok(pos, "`extends");
+    }
+    //: token ::= # `void =>
+    public void sawVoid(int pos) {
+        reportTok(pos, "`void");
+    }
+    //: token ::= # `int =>
+    public void sawInt(int pos) {
+        reportTok(pos, "`int");
+    }
+    //: token ::= # `while =>
+    public void sawWhile(int pos) {
+        reportTok(pos, "`while");
+    }
+    //: token ::= # `if =>
+    public void sawIf(int pos) {
+        reportTok(pos, "`if");
+    }
+    //: token ::= # `else =>
+    public void sawElse(int pos) {
+        reportTok(pos, "`else");
+    }
+    //: token ::= # `for =>
+    public void sawFor(int pos) {
+        reportTok(pos, "`for");
+    }
+    //: token ::= # `break =>
+    public void sawBreak(int pos) {
+        reportTok(pos, "`break");
+    }
+    //: token ::= # `this =>
+    public void sawThis(int pos) {
+        reportTok(pos, "`this");
+    }
+    //: token ::= # `false =>
+    public void sawFalse(int pos) {
+        reportTok(pos, "`false");
+    }
+    //: token ::= # `true =>
+    public void sawTrue(int pos) {
+        reportTok(pos, "`true");
+    }
+    //: token ::= # `super =>
+    public void sawSuper(int pos) {
+        reportTok(pos, "`super");
+    }
+    //: token ::= # `null =>
+    public void sawNull(int pos) {
+        reportTok(pos, "`null");
+    }
+    //: token ::= # `return =>
+    public void sawReturn(int pos) {
+        reportTok(pos, "`return");
+    }
+    //: token ::= # `instanceof =>
+    public void sawInstanceof(int pos) {
+        reportTok(pos, "`instanceof");
+    }
+    //: token ::= # `new =>
+    public void sawNew(int pos) {
+        reportTok(pos, "`new");
+    }
+    //: token ::= # `abstract =>
+    public void sawAbstract(int pos) {
+        reportTok(pos, "`abstract");
+    }
+    //: token ::= # `assert =>
+    public void sawAssert(int pos) {
+        reportTok(pos, "`assert");
+    }
+    //: token ::= # `byte =>
+    public void sawByte(int pos) {
+        reportTok(pos, "`byte");
+    }
+    //: token ::= # `case =>
+    public void sawCase(int pos) {
+        reportTok(pos, "`case");
+    }
+    //: token ::= # `catch =>
+    public void sawCatch(int pos) {
+        reportTok(pos, "`catch");
+    }
+    //: token ::= # `char =>
+    public void sawChar(int pos) {
+        reportTok(pos, "`char");
+    }
+    //: token ::= # `const =>
+    public void sawConst(int pos) {
+        reportTok(pos, "`const");
+    }
+    //: token ::= # `continue =>
+    public void sawContinue(int pos) {
+        reportTok(pos, "`continue");
+    }
+    //: token ::= # `default =>
+    public void sawDefault(int pos) {
+        reportTok(pos, "`default");
+    }
+    //: token ::= # `do =>
+    public void sawDo(int pos) {
+        reportTok(pos, "`do");
+    }
+    //: token ::= # `double =>
+    public void sawDouble(int pos) {
+        reportTok(pos, "`double");
+    }
+    //: token ::= # `enum =>
+    public void sawEnum(int pos) {
+        reportTok(pos, "`enum");
+    }
+    //: token ::= # `final =>
+    public void sawFinal(int pos) {
+        reportTok(pos, "`final");
+    }
+    //: token ::= # `finally =>
+    public void sawFinally(int pos) {
+        reportTok(pos, "`finally");
+    }
+    //: token ::= # `float =>
+    public void sawFloat(int pos) {
+        reportTok(pos, "`float");
+    }
+    //: token ::= # `goto =>
+    public void sawGoto(int pos) {
+        reportTok(pos, "`goto");
+    }
+    //: token ::= # `implements =>
+    public void sawImplements(int pos) {
+        reportTok(pos, "`implements");
+    }
+    //: token ::= # `import =>
+    public void sawImport(int pos) {
+        reportTok(pos, "`import");
+    }
+    //: token ::= # `interface =>
+    public void sawInterface(int pos) {
+        reportTok(pos, "`interface");
+    }
+    //: token ::= # `long =>
+    public void sawLong(int pos) {
+        reportTok(pos, "`long");
+    }
+    //: token ::= # `native =>
+    public void sawNative(int pos) {
+        reportTok(pos, "`native");
+    }
+    //: token ::= # `package =>
+    public void sawPackage(int pos) {
+        reportTok(pos, "`package");
+    }
+    //: token ::= # `private =>
+    public void sawPrivate(int pos) {
+        reportTok(pos, "`private");
+    }
+    //: token ::= # `protected =>
+    public void sawProtected(int pos) {
+        reportTok(pos, "`protected");
+    }
+    //: token ::= # `public =>
+    public void sawPublic(int pos) {
+        reportTok(pos, "`public");
+    }
+    //: token ::= # `short =>
+    public void sawShort(int pos) {
+        reportTok(pos, "`short");
+    }
+    //: token ::= # `static =>
+    public void sawStatic(int pos) {
+        reportTok(pos, "`static");
+    }
+    //: token ::= # `strictfp =>
+    public void sawStrictfp(int pos) {
+        reportTok(pos, "`strictfp");
+    }
+    //: token ::= # `switch =>
+    public void sawSwitch(int pos) {
+        reportTok(pos, "`switch");
+    }
+    //: token ::= # `synchronized =>
+    public void sawSynchronized(int pos) {
+        reportTok(pos, "`synchronized");
+    }
+    //: token ::= # `throw =>
+    public void sawThrow(int pos) {
+        reportTok(pos, "`throw");
+    }
+    //: token ::= # `throws =>
+    public void sawThrows(int pos) {
+        reportTok(pos, "`throws");
+    }
+    //: token ::= # `transient =>
+    public void sawTransient(int pos) {
+        reportTok(pos, "`transient");
+    }
+    //: token ::= # `try =>
+    public void sawTry(int pos) {
+        reportTok(pos, "`try");
+    }
+    //: token ::= # `volatile =>
+    public void sawVolatile(int pos) {
+        reportTok(pos, "`volatile");
+    }
+
+    //: token ::= # `! =>
+    public void sawNot(int pos) {
+        reportTok(pos, "`!");
+    }
+    //: token ::= # `!= =>
+    public void sawNotEqual(int pos) {
+        reportTok(pos, "`!=");
+    }
+    //: token ::= # `% =>
+    public void sawRemainder(int pos) {
+        reportTok(pos, "`%");
+    }
+    //: token ::= # `&& =>
+    public void sawAnd(int pos) {
+        reportTok(pos, "`&&");
+    }
+    //: token ::= # `* =>
+    public void sawTimes(int pos) {
+        reportTok(pos, "`*");
+    }
+    //: token ::= # `( =>
+    public void sawLpar(int pos) {
+        reportTok(pos, "`(");
+    }
+    //: token ::= # `) =>
+    public void sawRpar(int pos) {
+        reportTok(pos, "`)");
+    }
+    //: token ::= # `{ =>
+    public void sawLbrace(int pos) {
+        reportTok(pos, "`{");
+    }
+    //: token ::= # `} =>
+    public void sawRbrace(int pos) {
+        reportTok(pos, "`}");
+    }
+    //: token ::= # `- =>
+    public void sawMinus(int pos) {
+        reportTok(pos, "`-");
+    }
+    //: token ::= # `+ =>
+    public void sawPlus(int pos) {
+        reportTok(pos, "`+");
+    }
+    //: token ::= # `= =>
+    public void sawAssign(int pos) {
+        reportTok(pos, "`=");
+    }
+    //: token ::= # `== =>
+    public void sawEqual(int pos) {
+        reportTok(pos, "`==");
+    }
+    //: token ::= # `[ =>
+    public void sawLbrack(int pos) {
+        reportTok(pos, "`[");
+    }
+    //: token ::= # `] =>
+    public void sawRbrack(int pos) {
+        reportTok(pos, "`]");
+    }
+    //: token ::= # `|| =>
+    public void sawOr(int pos) {
+        reportTok(pos, "`||");
+    }
+    //: token ::= # `< =>
+    public void sawLess(int pos) {
+        reportTok(pos, "`<");
+    }
+    //: token ::= # `<= =>
+    public void sawLessEq(int pos) {
+        reportTok(pos, "`<=");
+    }
+    //: token ::= # `, =>
+    public void sawComma(int pos) {
+        reportTok(pos, "`,");
+    }
+    //: token ::= # `> =>
+    public void sawGreater(int pos) {
+        reportTok(pos, "`>");
+    }
+    //: token ::= # `>= =>
+    public void sawGreaterEq(int pos) {
+        reportTok(pos, "`>=");
+    }
+    //: token ::= # `. =>
+    public void sawDot(int pos) {
+        reportTok(pos, "`.");
+    }
+    //: token ::= # `; =>
+    public void sawSemi(int pos) {
+        reportTok(pos, "`;");
+    }
+    //: token ::= # `++ =>
+    public void sawPlusPlus(int pos) {
+        reportTok(pos, "`++");
+    }
+    //: token ::= # `-- =>
+    public void sawMinusMinus(int pos) {
+        reportTok(pos, "`--");
+    }
+    //: token ::= # `/ =>
+    public void sawSlash(int pos) {
+        reportTok(pos, "`/");
+    }
+
+    //: token ::= # ID =>
+    public void identifier(int pos, String s) {
+        reportTok(pos, "identifier: "+s);
+    }
+
+    //: token ::= # INTLIT =>
+    public void intLit(int pos, int n) {
+        reportTok(pos, "integer literal: "+n);
+    }
+
+    //: token ::= # STRINGLIT =>
+    public void stringLit(int pos, String s) {
+        reportTok(pos, "string literal: "+s);
+    }
+
+    //: token ::= # CHARLIT =>
+    public void charLit(int pos, int n) {
+        reportTok(pos, "chracter literal with ASCII value: "+n);
+    }
 /////////////////////////////////////////////////////////////////
 ///////////// Your modifications should start here //////////////
 /////////////////////////////////////////////////////////////////
@@ -376,40 +376,58 @@ public void charLit(int pos, int n) {
 //----------------//
 //: `boolean ::= "boolean" !idChar ws*
 //: reserved ::= `boolean
+
 //: `break ::= "break" !idChar ws*
 //: reserved ::= `break
+
 //: `class ::= "class" !idChar ws*
 //: reserved ::= `class
+
 //: `else ::= "else" !idChar ws*
 //: reserved ::= `else
+
 //: `extends ::= "extends" !idChar ws*
 //: reserved ::= `extends
+
 //: `false ::= "false" !idChar ws*
 //: reserved ::= `false
+
 //: `for ::= "for" !idChar ws*
 //: reserved ::= `for
+
 //: `if ::= "if" !idChar ws*
 //: reserved ::= `if
-//: `instanceOf ::= "instanceOf" !idChar ws*
-//: reserved ::= `instanceOf
+
+//: `instanceof ::= "instanceof" !idChar ws*
+//: reserved ::= `instanceof
+
 //: `int ::= "int" !idChar ws*
 //: reserved ::= `int
+
 //: `new ::= "new" !idChar ws*
 //: reserved ::= `new
+
 //: `null ::= "null" !idChar ws*
 //: reserved ::= `null
+
 //: `public ::= "public" !idChar ws*
 //: reserved ::= `public
+
 //: `return ::= "return" !idChar ws*
 //: reserved ::= `return
+
 //: `super ::= "super" !idChar ws*
 //: reserved ::= `super
+
 //: `this ::= "this" !idChar ws*
 //: reserved ::= `this
+
 //: `true ::= "true" !idChar ws*
 //: reserved ::= `true
+
 //: `void ::= "void" !idChar ws*
 //: reserved ::= `void
+
 //: `while ::= "while" !idChar ws*
 //: reserved ::= `while
 
@@ -417,118 +435,250 @@ public void charLit(int pos, int n) {
 // RESERVED WORDS (INACTIVE)
 //---------------------------//
 //: `abstract ::= "abstract" !idChar ws*
-//: reservedNotImplemented ::= `abstract
+//: reserved ::= `abstract
+
 //: `assert ::= "assert" !idChar ws*
-//: reservedNotImplemented ::= `assert
+//: reserved ::= `assert
+
 //: `byte ::= "byte" !idChar ws*
-//: reservedNotImplemented ::= `byte
+//: reserved ::= `byte
+
 //: `case ::= "case" !idChar ws*
-//: reservedNotImplemented ::= `case
+//: reserved ::= `case
+
 //: `catch ::= "catch" !idChar ws*
-//: reservedNotImplemented ::= `catch
+//: reserved ::= `catch
+
 //: `char ::= "char" !idChar ws*
-//: reservedNotImplemented ::= `char
+//: reserved ::= `char
+
 //: `const ::= "const" !idChar ws*
-//: reservedNotImplemented ::= `const
+//: reserved ::= `const
+
 //: `continue ::= "continue" !idChar ws*
-//: reservedNotImplemented ::= `continue
+//: reserved ::= `continue
+
 //: `default ::= "default" !idChar ws*
-//: reservedNotImplemented ::= `default
-//: `do ::= "double" !idChar ws*
-//: reservedNotImplemented ::= `double
+//: reserved ::= `default
+
+//: `double ::= "double" !idChar ws*
+//: reserved ::= `double
+
+//: `do ::= "do" !idChar ws*
+//: reserved ::= `do
+
 //: `enum ::= "enum" !idChar ws*
-//: reservedNotImplemented ::= `enum
+//: reserved ::= `enum
+
 //: `final ::= "final" !idChar ws*
-//: reservedNotImplemented ::= `final
+//: reserved ::= `final
+
 //: `finally ::= "finally" !idChar ws*
-//: reservedNotImplemented ::= `finally
+//: reserved ::= `finally
+
 //: `float ::= "float" !idChar ws*
-//: reservedNotImplemented ::= `float
+//: reserved ::= `float
+
 //: `goto ::= "goto" !idChar ws*
-//: reservedNotImplemented ::= `goto
+//: reserved ::= `goto
+
 //: `implements ::= "implements" !idChar ws*
-//: reservedNotImplemented ::= `implements
+//: reserved ::= `implements
+
 //: `import ::= "import" !idChar ws*
-//: reservedNotImplemented ::= `import
+//: reserved ::= `import
+
 //: `interface ::= "interface" !idChar ws*
-//: reservedNotImplemented ::= `interface
+//: reserved ::= `interface
+
 //: `long ::= "long" !idChar ws*
-//: reservedNotImplemented ::= `long
+//: reserved ::= `long
+
 //: `native ::= "native" !idChar ws*
-//: reservedNotImplemented ::= `native
+//: reserved ::= `native
+
 //: `package ::= "package" !idChar ws*
-//: reservedNotImplemented ::= `package
+//: reserved ::= `package
+
 //: `private ::= "private" !idChar ws*
-//: reservedNotImplemented ::= `private
+//: reserved ::= `private
+
 //: `protected ::= "protected" !idChar ws*
-//: reservedNotImplemented ::= `protected
+//: reserved ::= `protected
+
 //: `short ::= "short" !idChar ws*
-//: reservedNotImplemented ::= `short
+//: reserved ::= `short
+
 //: `static ::= "static" !idChar ws*
-//: reservedNotImplemented ::= `static
+//: reserved ::= `static
+
 //: `strictfp ::= "strictfp" !idChar ws*
-//: reservedNotImplemented ::= `strictfp
+//: reserved ::= `strictfp
+
 //: `switch ::= "switch" !idChar ws*
-//: reservedNotImplemented ::= `switch
+//: reserved ::= `switch
+
 //: `synchronized ::= "synchronized" !idChar ws*
-//: reservedNotImplemented ::= `synchronized
+//: reserved ::= `synchronized
+
 //: `throw ::= "throw" !idChar ws*
-//: reservedNotImplemented ::= `throw
+//: reserved ::= `throw
+
 //: `throws ::= "throws" !idChar ws*
-//: reservedNotImplemented ::= `throws
+//: reserved ::= `throws
+
 //: `transient ::= "transient" !idChar ws*
-//: reservedNotImplemented ::= `transient
+//: reserved ::= `transient
+
 //: `try ::= "try" !idChar ws*
-//: reservedNotImplemented ::= `try
+//: reserved ::= `try
+
 //: `volatile ::= "volatile" !idChar ws*
-//: reservedNotImplemented ::= `volatile
-//: reserved ::= reservedNotImplemented
+//: reserved ::= `volatile
 
 //--------------------------//
 // SPECIAL-TOKEN CHARACTERS
 //--------------------------//
 //: `! ::= "!" !"=" ws*
+
 //: `!= ::= "!=" ws*
+
+//: `* ::= !"/" "*" !"/" ws*
+
 //: `% ::= "%" ws*
+
 //: `&& ::= "&&" ws*
+
 //: `( ::= "(" ws*
+
 //: `) ::= ")" ws*
-//: `* ::= "*" ws*
+
 //: `+ ::= "+" !"+" ws*
+
 //: `++ ::= "++" ws*
+
 //: `, ::= "," ws*
+
 //: `- ::= "-" !"-" ws*
+
 //: `-- ::= "--" ws*
+
 //: `. ::= "." ws*
-//: `/ ::= "/" !"/" !"*"
+
+//: `/ ::= !"*" "/" !{"*" "/"} ws*
+
 //: `; ::= ";" ws*
+
 //: `< ::= "<" !"=" ws*
+
 //: `<= ::= "<=" ws*
+
 //: `= ::= "=" !"=" ws*
+
 //: `== ::= "==" ws*
+
 //: `> ::= ">" !"=" ws*
+
 //: `>= ::= ">=" ws*
+
 //: `[ ::= "[" ws*
-//: `] :== "]" ws*
-//: `{ :== "{" ws*
-//: `|| ::= "|" !"|" ws*
+
+//: `] ::= "]" ws*
+
+//: `{ ::= "{" ws*
+
+//: `|| ::= "||" ws*
+
 //: `} ::= "}" ws*
 
-
-//: ID ::= # !reserved letter idChar++ ws* => pass
-
 // A numeric literal
+//: INTLIT ::= # "0" !{"0".."9" "x" "X"} ws* =>
+public int returnZero(int pos, Character zero) {
+    return 0;
+}
+
 //: INTLIT ::= # intLit2 ws* =>
 public int convertToInt(int pos, String s) {
-	try {
-//		return new Integer(s).intValue();
-        return Integer.parseInt(s);
-	}
-	catch (NumberFormatException nfx) {
-		error(pos, "Integer literal value "+s+" is out of range.");
-		return 0;
-	}
+    try {
+        return new Integer(s).intValue();
+    }
+    catch (NumberFormatException nfx) {
+        error(pos, "Integer literal value "+s+" is out of range.");
+        return 0;
+    }
 }
+
+//: `x ::= {"x" "X"}
+//: INTLIT ::= # "0" `x digit++ ws* =>
+public int convertHexToInt(int pos, Character zero, List<Character> digits) {
+    String hex = charListToString(digits);
+
+    try {
+        return Integer.decode("0x"+hex);
+
+    } catch (NumberFormatException nfx) {
+
+        error(pos, "Hexidecimal literal value 0x" + hex + " is out of range.");
+        return 0;
+    }
+}
+
+//: INTLIT ::= # "0" digit++ ws* =>
+public int convertOctalToInt(int pos, Character zero, List<Character> digits) {
+    String octal = charListToString(digits);
+
+    try {
+        return Integer.decode("0"+octal);
+
+    } catch (NumberFormatException nfx) {
+
+        error(pos, "Octal literal value 0" + octal + " is out of range.");
+        return 0;
+    }
+}
+
+// Adapted from Dr. Vegdahl's in class notes (3.26) for string literals
+//: STRINGLIT ::= # '"' stringLiteral '"' ws*  =>
+public String convertStringLiteral(int pos, Character openQuote, String literal, Character closeQuote) {
+    return literal;
+}
+
+//: char ::= !{"'" "\"} printable  => pass
+//: CHARLIT ::= # "'" char "'" ws*  =>
+public int charLiteralToInt(int pos, Character openQuote, Character charLiteral, Character closeQuote) {
+    //TODO: Bounds checking in the ASCII range.
+    return (int) charLiteral;
+}
+
+// Adapted from Dr. Vegdahl's in class notes (3.28) for identifiers
+//: ID ::= # !reserved letter idChar** ws* =>
+public String convertToString(int pos, Character head, List<Character> rest) {
+
+    String hd = head.toString();        // The first character of the identifier as a string.
+    String rt = charListToString(rest); // The rest of the identifier as a string.
+
+    return hd + rt;
+}
+
+//================================================================
+// comments
+//================================================================
+
+//: singleComment ::= "//" printable** eol
+
+//: commentStart ::= "/*"
+//: commentTerminal ::= commentStart
+//: commentEnd ::= "*/"
+//: commentTerminal ::= commentEnd
+
+//: multiCommentContent ::= !commentTerminal printable
+//: multiCommentContent ::= eol
+//: multiCommentContent ::= # commentStart =>
+public void possibleNestedComment(int pos){
+    warning(pos, "Possible nested comment detected.");
+}
+
+//: multiComment ::= commentStart multiCommentContent** commentEnd
 
 //================================================================
 // character patterns -- "helper symbols"
@@ -548,6 +698,15 @@ public int convertToInt(int pos, String s) {
 // a digit
 //: digit ::= {"0".."9"} => pass
 
+// a printable ascii char
+//: printable ::= {" ".."~"} => pass
+
+// a printable string, without quotes or backslashes
+//: stringChar ::= !{'"' "\"} printable  => pass
+
+// zero or more string characters
+//: stringLiteral ::= stringChar** => text
+
 //================================================================
 // whitespace
 //================================================================
@@ -555,6 +714,8 @@ public int convertToInt(int pos, String s) {
 //whitespace
 //: ws ::= {" " 9} // space or tab
 //: ws ::= eol
+//: ws ::= singleComment
+//: ws ::= multiComment
 
 // to handle the common end-of-line sequences on different types
 // of systems, we treat the sequence CR+LF as an end of line.
@@ -567,91 +728,23 @@ public int convertToInt(int pos, String s) {
 // empty symbol which registers a new line at the position reduced
 //: registerNewline ::= # =>
 public void registerNewline(int pos) {
-	errorMsg.newline(pos-1);
+    errorMsg.newline(pos-1);
 }
 
-//================================================================
-// dummied-up (and incorrect) definitions, so that this starter-file
-// will compile. These definitions use unprintable characters.
-//================================================================
-//: CHARLIT ::= {130} =>
-public int zero(char c) { return 0;}
-//: ID ::= {131} => text
-//: STRINGLIT ::= {132} => text
-//: `! ::= {133}
-//: `% ::= {134}
-//: `&& ::= {135}
-//: `( ::= {136}
-//: `) ::= {137}
-//: `+ ::= {138}
-//: `++ ::= {139}
-//: `, ::= {140}
-//: `- ::= {141}
-//: `-- ::= {142}
-//: `. ::= {143}
-//: `/ ::= {144}
-//: `; ::= {145}
-//: `< ::= {146}
-//: `<= ::= {147}
-//: `= ::= {148}
-//: `== ::= {149}
-//: `> ::= {150}
-//: `>= ::= {151}
-//: `[ ::= {152}
-//: `] ::= {153}
-//: `{ ::= {154}
-//: `|| ::= {155}
-//: `} ::= {156}
-//: `abstract ::= {157}
-//: `assert ::= {158}
-//: `boolean ::= {159}
-//: `break ::= {160}
-//: `byte ::= {161}
-//: `case ::= {162}
-//: `catch ::= {163}
-//: `char ::= {164}
-//: `const ::= {165}
-//: `continue ::= {166}
-//: `default ::= {167}
-//: `do ::= {168}
-//: `double ::= {169}
-//: `enum ::= {170}
-//: `extends ::= {171}
-//: `false ::= {172}
-//: `final ::= {173}
-//: `finally ::= {174}
-//: `float ::= {175}
-//: `for ::= {176}
-//: `goto ::= {177}
-//: `if ::= {178}
-//: `implements ::= {179}
-//: `import ::= {180}
-//: `instanceof ::= {181}
-//: `int ::= {182}
-//: `interface ::= {183}
-//: `long ::= {184}
-//: `native ::= {185}
-//: `new ::= {186}
-//: `null ::= {187}
-//: `package ::= {188}
-//: `private ::= {189}
-//: `protected ::= {190}
-//: `public ::= {191}
-//: `return ::= {192}
-//: `short ::= {193}
-//: `static ::= {194}
-//: `strictfp ::= {195}
-//: `super ::= {196}
-//: `switch ::= {197}
-//: `synchronized ::= {198}
-//: `this ::= {199}
-//: `throw ::= {200}
-//: `throws ::= {201}
-//: `transient ::= {202}
-//: `true ::= {203}
-//: `try ::= {204}
-//: `void ::= {205}
-//: `volatile ::= {206}
-//: `while ::= {207}
+/**
+ * Given a list of characters, return a valid string of those characters.
+ *
+ * @param string the list to convert.
+ * @return the converted string.
+ */
+private String charListToString(List<Character> string) {
+    StringBuilder sb = new StringBuilder(string.size());
+
+    for (Character c : string) {
+        sb.append(c);
+    }
+
+    return string.toString();
+}
 
 }
