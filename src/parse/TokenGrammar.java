@@ -363,17 +363,19 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject {
     public void charLit(int pos, int n) {
         reportTok(pos, "chracter literal with ASCII value: "+n);
     }
-/////////////////////////////////////////////////////////////////
-///////////// Your modifications should start here //////////////
-/////////////////////////////////////////////////////////////////
 
-//================================================================
-// the actual tokens
-//================================================================
+/**
+ * RESERVED WORDS
+ *
+ * These are tokens that hold special significance in the Java language. A reserved word
+ * will NOT be recognized if it is suffixed with any token that would otherwise be
+ * recognized as an identifier. See below for a description of what constitutes an
+ * identifier.
+ *
+ * EX (good): boolean, class, else, if
+ * EX (bad) : elseNotAReservedWord, publiclyPublic, true42
+ */
 
-//----------------//
-// RESERVED WORDS
-//----------------//
 //: `boolean ::= "boolean" !idChar ws*
 //: reserved ::= `boolean
 
@@ -431,9 +433,16 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject {
 //: `while ::= "while" !idChar ws*
 //: reserved ::= `while
 
-//---------------------------//
-// RESERVED WORDS (INACTIVE)
-//---------------------------//
+/**
+ * RESERVED WORDS (INACTIVE)
+ *
+ * These are reserved words recognized by the Java language but are NOT used by
+ * the MiniJava language implementation. They are simply here to ensure that they
+ * are not recognized as identifiers in MiniJava programs.
+ *
+ * Please see RESERVED WORDS for a description of a valid reserved word.
+ */
+
 //: `abstract ::= "abstract" !idChar ws*
 //: reserved ::= `abstract
 
@@ -536,9 +545,14 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject {
 //: `volatile ::= "volatile" !idChar ws*
 //: reserved ::= `volatile
 
-//--------------------------//
-// SPECIAL-TOKEN CHARACTERS
-//--------------------------//
+/**
+ * SPECIAL TOKENS
+ *
+ * These are symbols representing special tokens in the MiniJava language.
+ * In cases where ambiguity may arise (ex: "=" vs "=="), this parser will apply
+ * a greedy selection in addition to lookaheads to ensure that the proper rule
+ * is matched at the proper time.
+ */
 //: `! ::= "!" !"=" ws*
 
 //: `!= ::= "!=" ws*
@@ -591,7 +605,25 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject {
 
 //: `} ::= "}" ws*
 
-// A numeric literal
+/**
+ *  INTEGER LITERALS
+ *
+ *  These rules represent integer literals in the MiniJava specification.
+ *
+ *  Integer literals are defined as one the following:
+ *
+ *    - The single character token "0", or
+ *
+ *    - A sequence of one or more digits that does _not_ start with "0", or
+ *
+ *    - A sequence of one or more digits that _does_ start with "0", or
+ *
+ *    - The single character token "0" followed by either "x" or "X" followed
+ *      by one or more digits.
+ *
+ *  In each case, a single integer value will be returned. If the value is too large,
+ *  an error message is given and the value 0 is returned instead.
+ */
 //: INTLIT ::= # "0" !{"0".."9" "x" "X"} ws* =>
 public int returnZero(int pos, Character zero) {
     return 0;
@@ -637,19 +669,80 @@ public int convertOctalToInt(int pos, Character zero, List<Character> digits) {
     }
 }
 
+/**
+ * STRING LITERALS
+ *
+ * These rules represent string literals in the MiniJava specification.
+ *
+ * String literals are defined as follows:
+ *
+ *     - Begins with a double quote character ("), followed by
+ *
+ *     - An optional sequence of printable characters (ASCII: 32..126)
+ *       excluding double quote (") or backslash (\), and
+ *
+ *     - ends with a double-quote character (")
+ *
+ * In each case, a single String value is produced without the surrounding
+ * double quote (") characters.
+ */
 // Adapted from Dr. Vegdahl's in class notes (3.26) for string literals
 //: STRINGLIT ::= # '"' stringLiteral '"' ws*  =>
 public String convertStringLiteral(int pos, Character openQuote, String literal, Character closeQuote) {
     return literal;
 }
 
+/**
+ * CHARACTER LITERALS
+ *
+ * These rules represent string literals in the MiniJava specification.
+ *
+ * Character literals are defined as follows:
+ *
+ *     - Begins with a single quote (') character, followed by
+ *
+ *     - a single printable character, not including the single quote (')
+ *       or backslash (\) character, and
+ *
+ *     - ends with a single quote (') character.
+ *
+ * In each case, a single int value is produced that is the ASCII
+ * representation of that character literal.
+ *
+ * EX (good): 'a', 'b', '!', ' ', 'K'
+ * EX (bad) : '\', ''', 'KEn', 'WHAT'
+ */
 //: char ::= !{"'" "\"} printable  => pass
 //: CHARLIT ::= # "'" char "'" ws*  =>
 public int charLiteralToInt(int pos, Character openQuote, Character charLiteral, Character closeQuote) {
-    //TODO: Bounds checking in the ASCII range.
-    return (int) charLiteral;
+    int asciiLiteral = (int) charLiteral;
+
+    if ((asciiLiteral > 126) || (asciiLiteral < 32)) {
+        error(pos, "Character literal '" + charLiteral + "' is not a printable character.");
+        return 32;  // Return a space in this case.
+    } else {
+        return asciiLiteral;
+    }
 }
 
+/**
+ * IDENTIFIER
+ *
+ * These rules represent identifiers in the MiniJava specification.
+ *
+ * An identifier is defined as follows:
+ *
+ *     - Starts with a letter and,
+ *
+ *     - May be followed by a sequence of one or more letters,
+ *       numbers, and underscores, with the exception that
+ *
+ *     - MiniJava and Java reserved words _should not_ be recognized
+ *       as identifiers.
+ *
+ * In each case, a single String value is produced that represents the
+ * identifier matched by this rule.
+ */
 // Adapted from Dr. Vegdahl's in class notes (3.28) for identifiers
 //: ID ::= # !reserved letter idChar** ws* =>
 public String convertToString(int pos, Character head, List<Character> rest) {
@@ -660,9 +753,27 @@ public String convertToString(int pos, Character head, List<Character> rest) {
     return hd + rt;
 }
 
-//================================================================
-// comments
-//================================================================
+/**
+ * COMMENTS
+ *
+ * These rules represent comments in the MiniJava specification.
+ *
+ * A comment is defined as follows:
+ *
+ *     - The character sequence "//", followed by a sequence of one or more
+ *       printable characters, followed by an eol sequence (defined below).
+ *
+ *     - The character sequence "/" "*", followed by a sequence of one more more
+ *       printable characters and/or newlines, followed by the character
+ *       sequence "*" "/"
+ *
+ * This parser does not store or manipulate comments other than to throw their
+ * values away.
+ *
+ * NOTE: This MiniJava specification does not support nested comments, in the event
+ *       that the character sequence "/" "*" is detected inside of an unterminated
+ *       comment block, a warning will be printed.
+ */
 
 //: singleComment ::= "//" printable** eol
 
@@ -680,9 +791,11 @@ public void possibleNestedComment(int pos){
 
 //: multiComment ::= commentStart multiCommentContent** commentEnd
 
-//================================================================
-// character patterns -- "helper symbols"
-//================================================================
+/**
+ * CHARACTER PATTERNS -- HELPER SYMBOLS
+ *
+ * Definitions for various helper symbols used throughout this file.
+ */
 
 // pattern that represents an integer literal (without trailing whitespace)
 //: intLit2 ::= !"0" digit++ => text
@@ -698,19 +811,21 @@ public void possibleNestedComment(int pos){
 // a digit
 //: digit ::= {"0".."9"} => pass
 
-// a printable ascii char
+// a printable ascii character
 //: printable ::= {" ".."~"} => pass
 
-// a printable string, without quotes or backslashes
+// a printable character that is not prefixed with a " or \
 //: stringChar ::= !{'"' "\"} printable  => pass
 
-// zero or more string characters
+// zero or more valid string characters
 //: stringLiteral ::= stringChar** => text
 
-//================================================================
-// whitespace
-//================================================================
-
+/**
+ * WHITESPACE
+ *
+ * Definitions for whitespace characters and other symbols that are
+ * valid, but not recognized by the MiniJava specification.
+ */
 //whitespace
 //: ws ::= {" " 9} // space or tab
 //: ws ::= eol
