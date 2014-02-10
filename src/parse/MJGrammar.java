@@ -107,6 +107,7 @@ public class MJGrammar
 		return new Block(pos, new StatementList(sl));
 	}
 	//: <stmt> ::= <local var decl> `; => pass
+    //: <stmt> ::= <if>  => pass
 
 	//: <assign> ::= <exp> # `= <exp> =>
 	public Statement assign(Exp lhs, int pos, Exp rhs) {
@@ -118,26 +119,85 @@ public class MJGrammar
 		return new LocalVarDecl(pos, t, name, init);
 	}
 
+    //: <if> ::= `if `( <exp> `) # <stmt> =>
+    public Statement ifStmt(Exp e1, int pos, Statement stmt) {
+        //todo: we need to implement the `else portion of this statement.
+        return new If(pos, e1, stmt, stmt);
+    }
+
 	//================================================================
 	//expressions
 	//================================================================
+    //: <exp> ::= <exp2> => pass
+    //: <exp2> ::= <exp3> => pass
+    //: <exp3> ::= <exp4> => pass
+    //: <exp4> ::= <exp5> => pass
+    //: <exp5> ::= <exp6> => pass
+    //: <exp6> ::= <exp7> => pass
+    //: <exp7> ::= <exp8> => pass
+    //: <exp8> ::= <exp9> => pass
 
-	//: <exp> ::= <exp5> => pass
-	
-	//: <exp5> ::= <exp5> # `+ <exp6> =>
+
+    //: <exp> ::= <exp> # `|| <exp2> =>
+    public Exp newOr(Exp e1, int pos, Exp e2) {
+        return new Or(pos, e1, e2);
+    }
+
+    //: <exp2> ::= <exp2> # `&& <exp3> =>
+    public Exp newAnd(Exp e1, int pos, Exp e2) {
+        return new And(pos, e1, e2);
+    }
+
+    //: <exp3> ::= <equals> => pass
+    //: <exp3> ::= <not equals> => pass
+
+    //: <equals> ::= <exp3> # `== <exp4> =>
+    public Exp newEq(Exp e1, int pos, Exp e2) {
+        return new Equals(pos, e1, e2);
+    }
+
+    //: <not equals> ::= <exp3> # `!= <exp4> =>
+    public Exp newNotEq(Exp e1, int pos, Exp e2) {
+
+        Equals eq = new Equals(pos, e1, e2);
+        return new Not(pos, eq);
+    }
+
+    ////: <exp4> ::= <greater than> => pass
+    ////: <exp4> ::= <less than> => pass
+    //: <exp4> ::= <gt equals> => pass
+    ////: <exp4> ::= <lt equals> => pass
+    ////: <exp4> ::= <instanceof> => pass
+
+    //: <gt equals> ::= <exp4> # `>= <exp5> =>
+    public Exp newGreatherThanEquals(Exp e1, int pos, Exp e2) {
+        Equals eq = new Equals(pos, e1, e2);
+        GreaterThan gt = new GreaterThan(pos, e1, e2);
+
+        return new Or(pos, eq, gt);
+    }
+
+    //: <exp5> ::= <plus> => pass
+    //: <exp5> ::= <minus> => pass
+
+	//: <plus> ::= <exp5> # `+ <exp6> =>
 	public Exp newPlus(Exp e1, int pos, Exp e2) {
 		return new Plus(pos, e1, e2);
 	}
-	//: <exp5> ::= <exp6> => pass
 
-	//: <exp6> ::= <exp6> # `* <exp7> =>
+    //: <minus> ::= <exp5> # `- <exp6> =>
+    public Exp newMinus(Exp e1, int pos, Exp e2) {
+        return new Minus(pos, e1, e2);
+    }
+
+
+	//: <exp7> ::= <exp7> # `* <exp8> =>
 	public Exp newTimes(Exp e1, int pos, Exp e2) {
 		return new Times(pos, e1, e2);
 	}
-	//: <exp6> ::= <exp7> => pass
 
-	//: <exp7> ::= <cast exp> => pass
-	//: <exp7> ::= <unary exp> => pass
+	//: <exp8> ::= <cast exp> => pass
+	//: <exp8> ::= <unary exp> => pass
 
 	//: <cast exp> ::= # `( <type> `) <cast exp> =>
 	public Exp newCast(int pos, Type t, Exp e) {
@@ -149,17 +209,22 @@ public class MJGrammar
 	public Exp newUnaryMinus(int pos, Exp e) {
 		return new Minus(pos, new IntegerLiteral(pos, 0), e);
 	}
-	//: <unary exp> ::= <exp8> => pass
 
-	//: <exp8> ::= # ID  =>
+    //: <unary exp> ::= # `+ <unary exp> =>
+    public Exp newUnaryPlus(int pos, Exp e) {
+        return new Plus(pos, new IntegerLiteral(pos, 0), e);
+    }
+	//: <unary exp> ::= <exp9> => pass
+
+	//: <exp9> ::= # ID  =>
 	public Exp newIdentfierExp(int pos, String name) {
 		return new IdentifierExp(pos, name);
 	}
-	//: <exp8> ::= <exp8> !<empty bracket pair> # `[ <exp> `] =>
+	//: <exp9> ::= <exp9> !<empty bracket pair> # `[ <exp> `] =>
 	public Exp newArrayLookup(Exp e1, int pos, Exp e2) {
 		return new ArrayLookup(pos, e1, e2);
 	}
-	//: <exp8> ::= # INTLIT =>
+	//: <exp9> ::= # INTLIT =>
 	public Exp newIntegerLiteral(int pos, int n) {
 		return new IntegerLiteral(pos, n);
 	}
