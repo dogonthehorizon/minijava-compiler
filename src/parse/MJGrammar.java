@@ -77,6 +77,28 @@ public class MJGrammar
 				new StatementList(stmts));
 	}
 
+    //: <formal list rest> ::= # `, <type> ID =>
+    public VarDecl createVarDeclList(int pos, Type t, String s) {
+        return new FormalDecl(pos, t, s);
+    }
+
+    //: <formal list> ::= # <type> ID <formal list rest>* =>
+    public VarDeclList newFormalDeclList(int pos, Type t, String s, List<VarDecl> d) {
+        FormalDecl head = new FormalDecl(pos, t, s);
+        VarDeclList rest = new VarDeclList(d);
+        rest.addElementAtFront(head);
+
+        return rest;
+    }
+
+    //: <method decl> ::= # `public !`void <type> ID `( <formal list>? `) `{ <stmt>* `return <exp> `; `} =>
+    public Decl createMethodDeclNonVoid(int pos, Type t, String id, VarDeclList d,
+                                        List<Statement> stmts, Exp e) {
+
+        return new MethodDeclNonVoid(pos, t, id, d,
+                new StatementList(stmts), e);
+    }
+
 	//: <type> ::= # `int =>
 	public Type intType(int pos) {
 		return new IntegerType(pos);
@@ -89,10 +111,27 @@ public class MJGrammar
 	public Type identifierType(int pos, String name) {
 		return new IdentifierType(pos, name);
 	}
-	//: <type> ::= # <type> <empty bracket pair> =>
+
+    //: <type> ::= # `void =>
+    public Type voidType(int pos) {
+        return new VoidType(pos);
+    }
+
+    //: <type> ::= # `null =>
+    public Type nullType(int pos) {
+        return new NullType(pos);
+    }
+
+	//: <type> ::= # <type> <empty bracket pair> !<empty bracket pair> =>
 	public Type newArrayType(int pos, Type t, Object dummy) {
 		return new ArrayType(pos, t);
 	}
+
+    //: <type> ::= # <type> <empty bracket pair> <empty bracket pair> =>
+    public Type newArrayType(int pos, Type t, Object dummy, Object dummy2) {
+        ArrayType at = new ArrayType(pos, t);
+        return new ArrayType(pos, at);
+    }
 
 	//: <empty bracket pair> ::= `[ `] => null
 
@@ -108,21 +147,59 @@ public class MJGrammar
 	}
 	//: <stmt> ::= <local var decl> `; => pass
     //: <stmt> ::= <if>  => pass
+    //: <stmt> ::= <break> => pass
 
 	//: <assign> ::= <exp> # `= <exp> =>
 	public Statement assign(Exp lhs, int pos, Exp rhs) {
 		return new Assign(pos, lhs, rhs);
 	}
 
+    /**
+     * Assignment Statement: Unary Increment
+     */
+    //: <assign> ::= `++ # ID =>
+    public Statement incrementByOne(int pos, String s) {
+        IdentifierExp id = new IdentifierExp(pos, s);
+        Plus p = new Plus(pos, new IntegerLiteral(pos, 1), id);
+        return new Assign(pos, id, p);
+    }
+    //: <assign> ::= # ID `++ => Statement incrementByOne(int, String)
+
+    /**
+     * Assignment Statement: Unary Decrement
+     */
+    //: <assign> ::= `-- # ID =>
+    public Statement decrementByOne(int pos, String s) {
+        IdentifierExp id = new IdentifierExp(pos, s);
+        Minus m = new Minus(pos, new IntegerLiteral(pos, 1), id);
+        return new Assign(pos, id, m);
+    }
+    //: <assign> ::= # ID `-- => Statement decrementByOne(int, String)
+
 	//: <local var decl> ::= <type> # ID `= <exp> =>
 	public Statement localVarDecl(Type t, int pos, String name, Exp init) {
 		return new LocalVarDecl(pos, t, name, init);
 	}
 
-    //: <if> ::= `if `( <exp> `) # <stmt> =>
-    public Statement ifStmt(Exp e1, int pos, Statement stmt) {
-        //todo: we need to implement the `else portion of this statement.
-        return new If(pos, e1, stmt, stmt);
+    /**
+     * If Statement
+     */
+    //: <if> ::= `if `( <exp> `) # <stmt> `else <stmt> =>
+    public Statement newIfElseStmt(Exp e1, int pos, Statement trueStmt, Statement falseStmt) {
+        return new If(pos, e1, trueStmt, falseStmt);
+    }
+
+    //: <if> ::= `if `( <exp> `) # <stmt> !`else =>
+    public Statement newIfStmt(Exp e, int pos, Statement stmt){
+        return new If(pos, e, stmt, new Block(pos, new StatementList()));
+    }
+
+    /**
+     * Break Statement
+     */
+    //: <break> ::= # `break `; =>
+    public Statement newBreakStmt(int pos) {
+        return new Break(pos);
     }
 
 	//================================================================
@@ -135,7 +212,6 @@ public class MJGrammar
     //: <exp5> ::= <exp6> => pass
     //: <exp6> ::= <exp7> => pass
     //: <exp7> ::= <exp8> => pass
-    //: <exp8> ::= <exp9> => pass
 
 
     //: <exp> ::= <exp> # `|| <exp2> =>
@@ -163,11 +239,11 @@ public class MJGrammar
         return new Not(pos, eq);
     }
 
-    ////: <exp4> ::= <greater than> => pass
-    ////: <exp4> ::= <less than> => pass
+    //: <exp4> ::= <greater than> => pass
+    //: <exp4> ::= <less than> => pass
     //: <exp4> ::= <gt equals> => pass
-    ////: <exp4> ::= <lt equals> => pass
-    ////: <exp4> ::= <instanceof> => pass
+    //: <exp4> ::= <lt equals> => pass
+    //: <exp4> ::= <instanceof> => pass
 
     //: <gt equals> ::= <exp4> # `>= <exp5> =>
     public Exp newGreatherThanEquals(Exp e1, int pos, Exp e2) {
@@ -175,6 +251,29 @@ public class MJGrammar
         GreaterThan gt = new GreaterThan(pos, e1, e2);
 
         return new Or(pos, eq, gt);
+    }
+
+    //: <lt equals> ::= <exp4> # `<= <exp5> =>
+    public Exp newLessThanEquals(Exp e1, int pos, Exp e2) {
+        Equals eq = new Equals(pos, e1, e2);
+        LessThan lt = new LessThan(pos, e1, e2);
+
+        return new Or(pos, eq, lt);
+    }
+
+    //: <greater than> ::= <exp4> # `> <exp5> =>
+    public Exp newGreaterThan(Exp e1, int pos, Exp e2) {
+        return new GreaterThan(pos, e1, e2);
+    }
+
+    //: <less than> ::= <exp4> # `< <exp5> =>
+    public Exp newLessThan(Exp e1, int pos, Exp e2) {
+        return new LessThan(pos, e1, e2);
+    }
+
+    //: <instanceof> ::= <exp4> # `instanceof <type> =>
+    public Exp newInstanceOf(Exp e1, int pos, Type t) {
+        return new InstanceOf(pos, e1, t);
     }
 
     //: <exp5> ::= <plus> => pass
@@ -196,6 +295,16 @@ public class MJGrammar
 		return new Times(pos, e1, e2);
 	}
 
+    //: <exp7> ::= <exp7> # `/ <exp8> =>
+    public Exp newDivide(Exp e1, int pos, Exp e2) {
+        return new Divide(pos, e1, e2);
+    }
+
+    //: <exp7> ::= <exp7> # `% <exp8> =>
+    public Exp newMod(Exp e1, int pos, Exp e2) {
+        return new Remainder(pos, e1, e2);
+    }
+
 	//: <exp8> ::= <cast exp> => pass
 	//: <exp8> ::= <unary exp> => pass
 
@@ -203,7 +312,7 @@ public class MJGrammar
 	public Exp newCast(int pos, Type t, Exp e) {
 		return new Cast(pos, t, e);
 	}
-	//: <cast exp> ::= # `( <type> `) <exp8> => Exp newCast(int, Type, Exp)
+	//: <cast exp> ::= # `( <type> `) <exp9> => Exp newCast(int, Type, Exp)
 
 	//: <unary exp> ::= # `- <unary exp> =>
 	public Exp newUnaryMinus(int pos, Exp e) {
@@ -220,14 +329,105 @@ public class MJGrammar
 	public Exp newIdentfierExp(int pos, String name) {
 		return new IdentifierExp(pos, name);
 	}
+
+    //: <exp9> ::= # `null =>
+    public Exp newNullExp(int pos) {
+        return new Null(pos);
+    }
+
+    //: <exp9> ::= # `true =>
+    public Exp newTrueExp(int pos) {
+        return new True(pos);
+    }
+
+    //: <exp9> ::= # `false =>
+    public Exp newFalseExp(int pos) {
+        return new False(pos);
+    }
+
+    //: <exp9> ::= # `this =>
+    public Exp newThisExp(int pos) {
+        return new This(pos);
+    }
+
+    //: <exp9> ::= # `super =>
+    public Exp newSuperExp(int pos) {
+        return new Super(pos);
+    }
+
 	//: <exp9> ::= <exp9> !<empty bracket pair> # `[ <exp> `] =>
 	public Exp newArrayLookup(Exp e1, int pos, Exp e2) {
 		return new ArrayLookup(pos, e1, e2);
 	}
+
+    /**
+     * Instance Variable Access
+     */
+    //: <exp9> ::= # <exp9> `. ID !`( =>
+    public Exp newInstanceVarAccess(int pos, Exp e, String s) {
+        return new InstVarAccess(pos, e, s);
+    }
+
+    /**
+     * Literals
+     */
 	//: <exp9> ::= # INTLIT =>
 	public Exp newIntegerLiteral(int pos, int n) {
 		return new IntegerLiteral(pos, n);
 	}
+
+    //: <exp9> ::= # STRINGLIT =>
+    public Exp newStringLiteral(int pos, String s) {
+        return new StringLiteral(pos, s);
+    }
+
+    /**
+     * Method Calls
+     */
+    //: <exp list> ::= <exp> `, <exp list> =>
+    public ExpList newExpParam(Exp e, ExpList el) {
+        el.addElementAtFront(e);
+        return el;
+    }
+
+    //: <exp list> ::= <exp>=>
+    public ExpList newExpList(Exp e) {
+        ExpList list = new ExpList();
+        list.add(e);
+        return list;
+    }
+
+    //: <exp9> ::= # <exp9> `. ID `( <exp list> `) =>
+    public Exp newCallExp(int pos, Exp e, String s, ExpList el) {
+        return new Call(pos, e, s, el);
+    }
+
+    //: <exp9> ::= # <exp9> `. ID `( !<exp list> `) =>
+    public Exp newCallExpNoParam(int pos, Exp e, String s) {
+        return new Call(pos, new This(pos), s, new ExpList());
+    }
+
+    //: <exp9> ::= # !`. ID `( !<exp list> `) =>
+    public Exp newCallThisExpNoParam(int pos, String s) {
+        return new Call(pos, new This(pos), s, new ExpList());
+    }
+
+    /**
+     * Object Creation Expression
+     */
+    //: <exp9> ::= # `new ID `( `) =>
+    public Exp newClassInst(int pos, String s) {
+        IdentifierType it = new IdentifierType(pos, s);
+        return new NewObject(pos, it);
+    }
+
+    /**
+     * Array Creation Expression
+     */
+    //: <exp9> ::= # `new <type> `[ <exp9> `] =>
+    public Exp newArrayInst(int pos, Type t, Exp e) {
+        return new NewArray(pos, t, e);
+    }
 
 	//================================================================
 	// Lexical grammar for filtered language begins here: DO NOT MODIFY
